@@ -29,12 +29,12 @@ spec:
       volumes:
       - name: minio-data
         persistentVolumeClaim:
-            claimName: minio-pvc2
+            claimName: minio-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: minio-pvc2
+  name: minio-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -53,21 +53,3 @@ spec:
   - protocol: TCP
     port: 9000
     targetPort: 9000
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: minio-ingress
-  namespace: projeto-ada
-spec:
-  rules:
-  - host: minio.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: minio-service
-            port:
-              number: 9000
